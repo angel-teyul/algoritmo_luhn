@@ -16,11 +16,11 @@ function luhnApi(app) {
   });
 
   function split_numbers(n) {
-    return (n + '').split('').map((i) =>{ return Number(i); });
+    return (n + '').split('').map((i) => { return Number(i); });
   }
 
   function luhn() {
-    const numberCreditCard = 79927398713;
+    const numberCreditCard = 79927398714;
     const number_splitted = split_numbers(numberCreditCard);
 
     const number_reversed = number_splitted.reverse();
@@ -29,18 +29,16 @@ function luhnApi(app) {
     let results = [];
 
     for (let i = 0; i < number_reversed.length; i++) {
-      const even_number = i % 2;
+      const even_number_position = i % 2;
 
-      if (even_number == 0) {
-        result = number_reversed[i] * 1;
-        results.push(result);
-      } else {
+      if (even_number_position !== 0) {
         result = number_reversed[i] * 2;
 
-        if (result > 9) {
-          result = isGreatherThanNine(result);
-        }
+        if (result > 9) result = isGreatherThanNine(result);
 
+        results.push(result);
+      } else {
+        result = number_reversed[i] * 1;
         results.push(result);
       }
 
@@ -51,14 +49,7 @@ function luhnApi(app) {
   }
 
   function isGreatherThanNine(result) {
-    const value = split_numbers(result);
-    let plus = 0;
-
-    for (let i = 0; i < value.length; i++) {
-      plus = plus + parseInt(value[i].toString(), 10);
-    }
-
-    return plus;
+    return Math.floor((result / 10) + (result % 10));
   }
 
   function isValidNumberCreditCard() {
@@ -66,9 +57,9 @@ function luhnApi(app) {
     let plus = 0,
         isValid = false;
 
-    results.forEach(element => {
-      plus = plus + element;
-    });
+    for (let j = 0; j  < results.length; j++) {
+      plus += results[j];
+    }
 
     base = plus % 10;
 
@@ -79,3 +70,5 @@ function luhnApi(app) {
   }
 
 }
+
+module.exports = luhnApi;
