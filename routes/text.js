@@ -26,7 +26,7 @@ function luhnApi(app) {
         }
     });
 
-    function split_numbersNo {
+    function split_numbers(n) {
         console.log('split_numbers', n);
         return new Promise((resolve) => {
             if (n.number) {
