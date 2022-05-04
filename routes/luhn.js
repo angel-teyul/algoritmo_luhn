@@ -38,7 +38,7 @@ function luhnApi(app) {
 
         results.push(result);
       } else {
-        result = number_reversed[i] * 1;
+        result = number_reversed[i];
         results.push(result);
       }
 
